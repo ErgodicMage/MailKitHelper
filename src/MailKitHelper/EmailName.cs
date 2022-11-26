@@ -1,4 +1,4 @@
-﻿namespace MailKitWrapper;
+﻿namespace ErgodicMage.MailKitHelper;
 
 public class EmailName
 {

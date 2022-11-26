@@ -1,25 +1,35 @@
 ﻿using MailKit.Security;
-using MailKit;
 
-namespace ErgodicMage.MailKitWrapper;
+namespace ErgodicMage.MailKitHelper;
 
 public partial class Email
 {
+    #region Constructors
+    private readonly SmtpConfiguration _smtpConfiguration;
+    private readonly EmailConfiguration _emailConfiguration;
+
+    public Email(SmtpConfiguration smtpConfiguration, EmailConfiguration emailConfiguration)
+    {
+        _smtpConfiguration = smtpConfiguration;
+        _emailConfiguration = emailConfiguration;
+    }
+    #endregion
+
     #region Base Send
-    public async Task<SmtpResponse> SendAsync(MimeMessage message, CancellationToken cancelationToken = default)
+    public SmtpResponse Send(MimeMessage message, CancellationToken cancelationToken = default)
     {
         try
         {
             using var smtpClient = new SmtpClient();
 
-            await smtpClient.ConnectAsync(_smtpConfiguration.Host, _smtpConfiguration.Port, SecureSocketOptions.Auto, cancelationToken);
+            smtpClient.Connect(_smtpConfiguration.Host, _smtpConfiguration.Port, SecureSocketOptions.Auto, cancelationToken);
 
             if (_smtpConfiguration.User is not null && _smtpConfiguration.Password is not null)
-                await smtpClient.AuthenticateAsync(_smtpConfiguration.User, _smtpConfiguration.Password, cancelationToken);
+                smtpClient.Authenticate(_smtpConfiguration.User, _smtpConfiguration.Password, cancelationToken);
 
-            await smtpClient.SendAsync(message, cancelationToken);
+            smtpClient.Send(message, cancelationToken);
 
-            await smtpClient.DisconnectAsync(true);
+            smtpClient.Disconnect(true);
         }
         catch (Exception e)
         {
@@ -40,7 +50,7 @@ public partial class Email
     #endregion
 
     #region Send Helper Functions
-    public async Task<SmtpResponse> SendAsync(string body, bool isHtml = false, ICollection<string> attachments = null, CancellationToken cancelationToken = default)
+    public SmtpResponse Send(string body, bool isHtml = false, ICollection<string> attachments = null, CancellationToken cancelationToken = default)
     {
         var messageBuilder = new MimeMessageBuilder(_emailConfiguration);
         MimeMessage message;
@@ -49,16 +59,16 @@ public partial class Email
         else
             message = messageBuilder.Build(body, null, attachments);
 
-        return await SendAsync(message, cancelationToken);
+        return Send(message, cancelationToken);
     }
 
-    public async Task<SmtpResponse> SendAsync(string textBody = null, string htmlBody = null, ICollection<string> attachments = null, CancellationToken cancelationToken = default)
+    public SmtpResponse Send(string textBody = null, string htmlBody = null, ICollection<string> attachments = null, CancellationToken cancelationToken = default)
     {
         var messageBuilder = new MimeMessageBuilder(_emailConfiguration);
         MimeMessage message;
         message = messageBuilder.Build(textBody, htmlBody, attachments);
 
-        return await SendAsync(message, cancelationToken);
+        return Send(message, cancelationToken);
     }
     #endregion
 }

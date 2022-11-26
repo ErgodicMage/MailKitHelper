@@ -1,6 +1,4 @@
-﻿using MailKitWrapper;
-
-namespace ErgodicMage.MailKitWrapper;
+﻿namespace ErgodicMage.MailKitHelper;
 
 internal class MimeMessageBuilder
 {

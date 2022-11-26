@@ -1,4 +1,4 @@
-﻿namespace ErgodicMage.MailKitWrapper;
+﻿namespace ErgodicMage.MailKitHelper;
 
 public class SmtpConfiguration
 {
