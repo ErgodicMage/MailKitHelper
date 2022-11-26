@@ -2,7 +2,7 @@
 
 namespace ErgodicMage.MailKitHelper;
 
-public partial class Email
+public partial class Email : IEmail
 {
     #region Constructors
     private readonly SmtpConfiguration _smtpConfiguration;
@@ -29,7 +29,7 @@ public partial class Email
 
             smtpClient.Send(message, cancelationToken);
 
-            smtpClient.Disconnect(true);
+            smtpClient.Disconnect(true, cancelationToken);
         }
         catch (Exception e)
         {
@@ -50,7 +50,7 @@ public partial class Email
     #endregion
 
     #region Send Helper Functions
-    public SmtpResponse Send(string body, bool isHtml = false, ICollection<string> attachments = null, CancellationToken cancelationToken = default)
+    public SmtpResponse Send(string body, bool isHtml = false, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
     {
         var messageBuilder = new MimeMessageBuilder(_emailConfiguration);
         MimeMessage message;
@@ -62,7 +62,7 @@ public partial class Email
         return Send(message, cancelationToken);
     }
 
-    public SmtpResponse Send(string textBody = null, string htmlBody = null, ICollection<string> attachments = null, CancellationToken cancelationToken = default)
+    public SmtpResponse Send(string? textBody = null, string? htmlBody = null, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
     {
         var messageBuilder = new MimeMessageBuilder(_emailConfiguration);
         MimeMessage message;

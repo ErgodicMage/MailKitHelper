@@ -18,7 +18,7 @@ public partial class Email
 
             await smtpClient.SendAsync(message, cancelationToken);
 
-            await smtpClient.DisconnectAsync(true);
+            await smtpClient.DisconnectAsync(true, cancelationToken);
         }
         catch (Exception e)
         {
@@ -39,7 +39,7 @@ public partial class Email
     #endregion
 
     #region Send Helper Functions
-    public async Task<SmtpResponse> SendAsync(string body, bool isHtml = false, ICollection<string> attachments = null, CancellationToken cancelationToken = default)
+    public async Task<SmtpResponse> SendAsync(string body, bool isHtml = false, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
     {
         var messageBuilder = new MimeMessageBuilder(_emailConfiguration);
         MimeMessage message;
@@ -51,7 +51,7 @@ public partial class Email
         return await SendAsync(message, cancelationToken);
     }
 
-    public async Task<SmtpResponse> SendAsync(string textBody = null, string htmlBody = null, ICollection<string> attachments = null, CancellationToken cancelationToken = default)
+    public async Task<SmtpResponse> SendAsync(string? textBody = null, string? htmlBody = null, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
     {
         var messageBuilder = new MimeMessageBuilder(_emailConfiguration);
         MimeMessage message;

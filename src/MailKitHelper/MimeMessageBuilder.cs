@@ -6,7 +6,7 @@ internal class MimeMessageBuilder
 
     public MimeMessageBuilder(EmailConfiguration emailConfiguration) => _emailConfiguration = emailConfiguration;
 
-    public MimeMessage Build(string textBody, string htmlBody, ICollection<string> attachments)
+    public MimeMessage Build(string? textBody, string? htmlBody, ICollection<string>? attachments)
     {
         var message = new MimeMessage();
 
