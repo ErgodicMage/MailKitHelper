@@ -8,6 +8,12 @@ public partial class Email : IEmail
     private readonly SmtpConfiguration _smtpConfiguration;
     private readonly EmailConfiguration _emailConfiguration;
 
+    public Email(SmtpConfiguration smtpConfiguration)
+    {
+        _smtpConfiguration = smtpConfiguration;
+        _emailConfiguration = new EmailConfiguration();
+    }
+
     public Email(SmtpConfiguration smtpConfiguration, EmailConfiguration emailConfiguration)
     {
         _smtpConfiguration = smtpConfiguration;
@@ -51,8 +57,13 @@ public partial class Email : IEmail
 
     #region Send Helper Functions
     public SmtpResponse Send(string body, bool isHtml = false, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
+        => Send(_emailConfiguration!, body, isHtml, attachments, cancelationToken);
+
+    public SmtpResponse Send(EmailConfiguration emailConfig, string body, bool isHtml = false, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
     {
-        var messageBuilder = new MimeMessageBuilder(_emailConfiguration);
+        ArgumentNullException.ThrowIfNull(emailConfig);
+
+        var messageBuilder = new MimeMessageBuilder(emailConfig);
         MimeMessage message;
         if (isHtml)
             message = messageBuilder.Build(null, body, attachments);
@@ -63,8 +74,13 @@ public partial class Email : IEmail
     }
 
     public SmtpResponse Send(string? textBody = null, string? htmlBody = null, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
+        => Send(_emailConfiguration!, textBody, htmlBody, attachments, cancelationToken);
+
+    public SmtpResponse Send(EmailConfiguration emailConfig, string? textBody = null, string? htmlBody = null, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
     {
-        var messageBuilder = new MimeMessageBuilder(_emailConfiguration);
+        ArgumentNullException.ThrowIfNull(emailConfig);
+
+        var messageBuilder = new MimeMessageBuilder(emailConfig);
         MimeMessage message;
         message = messageBuilder.Build(textBody, htmlBody, attachments);
 

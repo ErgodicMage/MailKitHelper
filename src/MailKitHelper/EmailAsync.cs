@@ -39,9 +39,14 @@ public partial class Email
     #endregion
 
     #region Send Helper Functions
-    public async Task<SmtpResponse> SendAsync(string body, bool isHtml = false, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
+    public Task<SmtpResponse> SendAsync(string body, bool isHtml = false, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
+        => SendAsync(_emailConfiguration!, body, isHtml, attachments, cancelationToken);
+
+    public async Task<SmtpResponse> SendAsync(EmailConfiguration emailConfig, string body, bool isHtml = false, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
     {
-        var messageBuilder = new MimeMessageBuilder(_emailConfiguration);
+        ArgumentNullException.ThrowIfNull(emailConfig);
+
+        var messageBuilder = new MimeMessageBuilder(emailConfig);
         MimeMessage message;
         if (isHtml)
             message = messageBuilder.Build(null, body, attachments);
@@ -51,9 +56,15 @@ public partial class Email
         return await SendAsync(message, cancelationToken);
     }
 
-    public async Task<SmtpResponse> SendAsync(string? textBody = null, string? htmlBody = null, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
+    public Task<SmtpResponse> SendAsync(string? textBody = null, string? htmlBody = null, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
+        => SendAsync(_emailConfiguration!, textBody, htmlBody, attachments, cancelationToken);
+
+
+    public async Task<SmtpResponse> SendAsync(EmailConfiguration emailConfig, string? textBody = null, string? htmlBody = null, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
     {
-        var messageBuilder = new MimeMessageBuilder(_emailConfiguration);
+        ArgumentNullException.ThrowIfNull(emailConfig);
+
+        var messageBuilder = new MimeMessageBuilder(emailConfig);
         MimeMessage message;
         message = messageBuilder.Build(textBody, htmlBody, attachments);
 
