@@ -12,30 +12,20 @@ internal class MimeMessageBuilder
 
         message.Subject = _emailConfiguration.Subject;
 
-        if (_emailConfiguration.From is not null)
-            message.From.Add(new MailboxAddress(_emailConfiguration.From.Name, _emailConfiguration.From.Address));
+        if (InternetAddressList.TryParse(_emailConfiguration.From, out var fromEmailAddressList))
+            message.From.AddRange(fromEmailAddressList);
 
-        if (_emailConfiguration.To is not null)
-        {
-            foreach(var to in _emailConfiguration.To)
-                message.To.Add(new MailboxAddress(to.Name, to.Address));
-        }
+        if (InternetAddressList.TryParse(_emailConfiguration.To, out var toEmailAddressList))
+            message.To.AddRange(toEmailAddressList);
 
-        if (_emailConfiguration.Cc is not null)
-        {
-            foreach(var cc in _emailConfiguration.Cc)
-                message.Cc.Add(new MailboxAddress(cc.Name, cc.Address));
-        }
+        if (InternetAddressList.TryParse(_emailConfiguration.Cc, out var ccEmailAddressList))
+            message.Cc.AddRange(ccEmailAddressList);
 
-        if (_emailConfiguration.Bcc is not null)
-        {
-            foreach(var bcc in _emailConfiguration.Bcc)
-                message.Bcc.Add(new MailboxAddress(bcc.Name, bcc.Address));
-        }
+        if (InternetAddressList.TryParse(_emailConfiguration.Bcc, out var bccEmailAddressList))
+            message.Bcc.AddRange(bccEmailAddressList);
 
-        if (_emailConfiguration.RespondTo is not null)
-            message.ReplyTo.Add(new MailboxAddress(_emailConfiguration.RespondTo.Name, _emailConfiguration.RespondTo.Address));
-
+        if (InternetAddressList.TryParse(_emailConfiguration.RespondTo, out var replytoEmailAddressList))
+            message.ReplyTo.AddRange(replytoEmailAddressList);
 
         var bodyBuilder = new BodyBuilder();
 
