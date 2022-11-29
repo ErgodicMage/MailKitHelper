@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4F20D475
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailKitHelper", "src\MailKitHelper\MailKitHelper.csproj", "{01E8C2A6-6FBC-4BD3-91BE-D25851B3C076}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailkitHelperTests", "tests\MailkitHelperTests\MailkitHelperTests.csproj", "{8DE3B22B-4558-431C-85F3-8F0E9D026338}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,12 +27,17 @@ Global
 		{01E8C2A6-6FBC-4BD3-91BE-D25851B3C076}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01E8C2A6-6FBC-4BD3-91BE-D25851B3C076}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01E8C2A6-6FBC-4BD3-91BE-D25851B3C076}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DE3B22B-4558-431C-85F3-8F0E9D026338}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DE3B22B-4558-431C-85F3-8F0E9D026338}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DE3B22B-4558-431C-85F3-8F0E9D026338}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DE3B22B-4558-431C-85F3-8F0E9D026338}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{01E8C2A6-6FBC-4BD3-91BE-D25851B3C076} = {FB4B0675-FC7C-4652-A97F-39118EE6DF65}
+		{8DE3B22B-4558-431C-85F3-8F0E9D026338} = {4F20D475-B3A6-4C3C-9A2C-1EF26ABDB05A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC509A00-1176-4CFF-BF12-8E4D2CDB669C}
