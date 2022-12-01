@@ -27,6 +27,12 @@ internal class MimeMessageBuilder
         if (InternetAddressList.TryParse(_emailConfiguration.RespondTo, out var replytoEmailAddressList))
             message.ReplyTo.AddRange(replytoEmailAddressList);
 
+        if (Enum.TryParse<MessageImportance>(_emailConfiguration.Importance, out var importance))
+            message.Importance = importance;
+
+        if (Enum.TryParse<MessagePriority>(_emailConfiguration.Priority, out var priority))
+            message.Priority = priority;
+
         var bodyBuilder = new BodyBuilder();
 
         if (string.IsNullOrWhiteSpace(textBody))
