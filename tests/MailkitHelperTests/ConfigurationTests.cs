@@ -23,10 +23,10 @@ public class ConfigurationTests
         var smtpConfiguration = MailKitHelperConfigHelper.GetSmtpConfiguration(TestingUtilities.Configuration);
 
         Assert.NotNull(smtpConfiguration);
-        Assert.Equal("localhost", smtpConfiguration.Host);
-        Assert.Equal(0, smtpConfiguration.Port);
-        Assert.Equal("Me", smtpConfiguration.User);
-        Assert.Equal("Secret", smtpConfiguration.Password);
+        Assert.Equal("localhost", smtpConfiguration?.Host);
+        Assert.Equal(0, smtpConfiguration?.Port);
+        Assert.Equal("Me", smtpConfiguration?.User);
+        Assert.Equal("Secret", smtpConfiguration?.Password);
     }
 
     [Fact]
@@ -36,12 +36,12 @@ public class ConfigurationTests
         var emailConfiguration = MailKitHelperConfigHelper.GetEmailConfiguration(TestingUtilities.Configuration);
 
         Assert.NotNull(emailConfiguration);
-        Assert.Equal("Hello Email Test", emailConfiguration.Subject);
-        Assert.Equal("ErgodicMage@gmail.com", emailConfiguration.From);
-        Assert.Equal("Ergodic Mage <ErgodicMage@gmail.com>;John Jacob <JohnJacob@gmail.com>;BobBob@gmail.com", emailConfiguration.To);
-        Assert.Null(emailConfiguration.Cc);
-        Assert.Null(emailConfiguration.Bcc);
-        Assert.Null(emailConfiguration.RespondTo);
+        Assert.Equal("Hello Email Test", emailConfiguration?.Subject);
+        Assert.Equal("ErgodicMage@gmail.com", emailConfiguration?.From);
+        Assert.Equal("Ergodic Mage <ErgodicMage@gmail.com>;John Jacob <JohnJacob@gmail.com>;BobBob@gmail.com", emailConfiguration?.To);
+        Assert.Null(emailConfiguration?.Cc);
+        Assert.Null(emailConfiguration?.Bcc);
+        Assert.Null(emailConfiguration?.RespondTo);
     }
 
     [Fact]

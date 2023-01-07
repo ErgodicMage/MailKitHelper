@@ -11,9 +11,9 @@ public class TestCategories
 
 public static class TestingUtilities
 {
-    public static string TestNamespace { get; set; }
+    public static string TestNamespace { get; set; } = "MailKitHelperTests";
 
-    public static IConfiguration Configuration { get; private set; }
+    public static IConfiguration? Configuration { get; private set; }
 
     public static void LoadAppSettings(string? appSettingFile = "appsettings.json")
     {
@@ -44,7 +44,7 @@ public static class TestingUtilities
 
     public static StreamReader LoadResourceFile(string resourcefile)
     {
-        StreamReader reader = new StreamReader(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(resourcefile));
+        StreamReader reader = new StreamReader(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(resourcefile)!);
         return reader;
     }
 }
