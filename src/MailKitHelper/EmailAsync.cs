@@ -2,7 +2,7 @@
 
 namespace ErgodicMage.MailKitHelper;
 
-public partial class Email
+public sealed partial class Email
 {
     #region Base Send
     public async Task<SmtpResponse> SendAsync(MimeMessage message, CancellationToken cancelationToken = default)
@@ -56,11 +56,11 @@ public partial class Email
         return await SendAsync(message, cancelationToken);
     }
 
-    public Task<SmtpResponse> SendAsync(string? textBody = null, string? htmlBody = null, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
+    public Task<SmtpResponse> SendAsync(string textBody, string htmlBody, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
         => SendAsync(_emailConfiguration!, textBody, htmlBody, attachments, cancelationToken);
 
 
-    public async Task<SmtpResponse> SendAsync(EmailConfiguration emailConfig, string? textBody = null, string? htmlBody = null, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
+    public async Task<SmtpResponse> SendAsync(EmailConfiguration emailConfig, string textBody, string htmlBody, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
     {
         ArgumentNullException.ThrowIfNull(emailConfig);
 

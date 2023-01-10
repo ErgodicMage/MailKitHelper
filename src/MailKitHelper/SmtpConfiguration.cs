@@ -1,6 +1,6 @@
 ﻿namespace ErgodicMage.MailKitHelper;
 
-public class SmtpConfiguration
+public sealed class SmtpConfiguration
 {
     public string? Host { get; set; }
     public int Port { get; set; } = 0;

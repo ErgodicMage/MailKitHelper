@@ -4,7 +4,7 @@
 /// Configures the email to be sent.
 /// Note: this does not configure the SMTP, doing so requires the SmtpConfiguration class.
 /// </summary>
-public class EmailConfiguration
+public sealed class EmailConfiguration
 {
     /// <summary>
     /// The subject of the email to be sent

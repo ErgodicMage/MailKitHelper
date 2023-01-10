@@ -1,8 +1,9 @@
-﻿using MailKit.Security;
+﻿using Microsoft.Extensions.Configuration;
+using MailKit.Security;
 
 namespace ErgodicMage.MailKitHelper;
 
-public partial class Email : IEmail
+public sealed partial class Email : IEmail
 {
     #region Constructors
     private readonly SmtpConfiguration _smtpConfiguration;
@@ -19,7 +20,16 @@ public partial class Email : IEmail
         _smtpConfiguration = smtpConfiguration;
         _emailConfiguration = emailConfiguration;
     }
+
+    public Email(IConfiguration configuration)
+    {
+        _smtpConfiguration = MailKitHelperConfigHelper.GetSmtpConfiguration(configuration);
+        _emailConfiguration = MailKitHelperConfigHelper.GetEmailConfiguration(configuration);
+    }
     #endregion
+
+    public SmtpConfiguration? SmtpConfiguration {get => _smtpConfiguration;}
+    public EmailConfiguration? EmailConfiguration {get => _emailConfiguration;}
 
     #region Base Send
     public SmtpResponse Send(MimeMessage message, CancellationToken cancelationToken = default)
@@ -73,10 +83,10 @@ public partial class Email : IEmail
         return Send(message, cancelationToken);
     }
 
-    public SmtpResponse Send(string? textBody = null, string? htmlBody = null, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
+    public SmtpResponse Send(string textBody, string htmlBody, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
         => Send(_emailConfiguration!, textBody, htmlBody, attachments, cancelationToken);
 
-    public SmtpResponse Send(EmailConfiguration emailConfig, string? textBody = null, string? htmlBody = null, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
+    public SmtpResponse Send(EmailConfiguration emailConfig, string textBody, string htmlBody, ICollection<string>? attachments = null, CancellationToken cancelationToken = default)
     {
         ArgumentNullException.ThrowIfNull(emailConfig);
 
